@@ -6,7 +6,7 @@ Leren is a simple Excel-based reporting engine. It helps to make a report in exc
 2. Type in cell A1 of excel: `{COLL=Apples/Green;WIDTH=2}`
 3. Type in cell A2 of excel: `{Size}`
 4. Let's write down data model:
-```
+```c#
 public class GreenApple
 {
    public double Size {set;get;}
@@ -21,7 +21,7 @@ public class Root
 }
 ```
 5. Ok, it's time to generate a report
-```
+```c#
 // add some data
 var root = new Root();
 root.Apples = new Apples();
@@ -48,7 +48,7 @@ At first, select a data provider. Some of them are ready out-of-box:
 ## Custom data provider
 If you aren't satisfied with capabailities that are ready out-of-the-box you can always implement data provider by yourself. Implement **IProvider** interface in order to use your own data provder.
 
-```
+```c#
 public interface IProvider
     {
         int GetCollectionCount(string path, string tag, List<ContextItem> context);
@@ -59,16 +59,36 @@ public interface IProvider
 ## Report definition language
 There is a syntax for data source definition: curvy bracets and special words. There is only two types of definitions: **collection** and **property**.
 
+## Language for Reflection Provider
+
 Use collection definition in order to make some cells repeat itself x times. Here is a sample of such definition:
 ```
 {COLL=Root/SomeProperty/SomeCollection;HEIGHT=1;WIDTH=10;GROW=DOWN;NOINSERT='YES'}
 ```
 Arguments are described below:
-- COLL= is a path to property, starting from the root of data model. When you place one collection inside another, you have to specify path to collection starting from current item (context).
+- COLL= is a path to property, each element (property) is separated with **"/"**, starting from the root of data model. When you place one collection inside another, you have to specify path to collection starting from current item (context).
 - HEIGHT - ...
 - WIDTH - ...
 - GROW - grow direction. Use 'right' to make it grow right, or 'down' for growing down.
 - NOINSERT - when it's set to 'yes', inserting of cells is not performed while processing current collection. Default value is 'no'. It is useful when you want to generate a chess board, for example.
+
+Use property definition to display data. Here is full sample:
+```
+{Car1/Wheel1/Diam;MULT=3.1;ADD=100;FORMAT=0.000}
+```
+Arguments are described below:
+- necessary argument is a path to property. Use fully-qualified path, starting from data root, or starting from current item, when you are in a collection context.
+- MULT multiples property value by it's argument.
+- ADD adds argument to property value or to result of MULT, if MULT is specified.
+- FORMAT is formatting numeric property value.
+
+## Language for Oracle/MySql Provider
+
+bla-bla-bla
+
+## Language for XML Provider
+
+bla-bla-bla
 
 
 **TODO: write more docs!**
