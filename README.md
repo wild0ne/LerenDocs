@@ -1,7 +1,7 @@
-#What is it?
+# What is it?
 Leren is a simple Excel-based reporting engine. It helps to make a report in excel in fast-and-easy-to-make manner. You have to describe data sources right inside a cell of excel worksheet. It supports multi-level data structures and poor formatting options.
 
-#Fast start!
+# Fast start!
 1. Make an excel file, e.g. "file1.xlsx"
 2. Type in cell A1 of excel: `{COLL=Apples/Green;WIDTH=2}`
 3. Type in cell A2 of excel: `{Size}`
@@ -36,17 +36,16 @@ engine.Go(@"file.xlsx", @"report.xlsx");
 ```
 Now open the file `report.xlsx` to see what's generated.
 
+# How it works?
 
-
-#How it works?
-
-##Data provder
+## Data provder
 At first, select a data provider. Some of them are ready out-of-box:
 - Reflection provider for data stored in a tree of objects
 - Xml Provider for data stored in xml file
 - MySql provider for data stored in MySql database
 - Oracle provider for data stored in Oracle database
-##Custom data provider
+
+## Custom data provider
 If you aren't satisfied with capabailities that are ready out-of-the-box you can always implement data provider by yourself. Implement **IProvider** interface in order to use your own data provder.
 
 ```
