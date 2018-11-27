@@ -56,7 +56,19 @@ public interface IProvider
         ImageInfo GetImage(string path, string tag, List<ContextItem> context);
     }
 ```
-##Report definition language
-{COLL=Root/SomeProperty/SomeCollection}
+## Report definition language
+There is a syntax for data source definition: curvy bracets and special words. There is only two types of definitions: **collection** and **property**.
+
+Use collection definition in order to make some cells repeat itself x times. Here is a sample of such definition:
+```
+{COLL=Root/SomeProperty/SomeCollection;HEIGHT=1;WIDTH=10;GROW=DOWN;NOINSERT='YES'}
+```
+Arguments are described below:
+- COLL= is a path to property, starting from the root of data model. When you place one collection inside another, you have to specify path to collection starting from current item (context).
+- HEIGHT - ...
+- WIDTH - ...
+- GROW - grow direction. Use 'right' to make it grow right, or 'down' for growing down.
+- NOINSERT - when it's set to 'yes', inserting of cells is not performed while processing current collection. Default value is 'no'. It is useful when you want to generate a chess board, for example.
+
 
 **TODO: write more docs!**
