@@ -57,7 +57,7 @@ public interface IProvider
     }
 ```
 ## Report definition language
-There is a syntax for data source definition: curvy bracets and special words. There is only two types of definitions: **collection** and **property**.
+There is a syntax for data source definition: curvy bracets and special words. There are only two types of definitions: **collection** and **property**.
 
 ## Language for Reflection Provider
 
