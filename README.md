@@ -57,38 +57,43 @@ public interface IProvider
     }
 ```
 ## Report definition language
-There is a syntax for data source definition: curvy bracets and special words. There are only two types of definitions: **collection** and **property**.
+There is a syntax for data source definition: curvy bracets and special words. There are only three types of definitions: **collection**, **property** and **picture**.
 
 ## Language for Reflection Provider
 
 Use collection definition in order to make some cells repeat itself x times. Here is a sample of such definition:
 ```
-{COLL=Root/SomeProperty/SomeCollection;HEIGHT=1;WIDTH=10;GROW=DOWN;NOINSERT='YES'}
+{COLL=Root/SomeProperty/SomeCollection;HEIGHT=1;WIDTH=10;GROW=DOWN;INSERT=NO;TAG=sometag}
 ```
 Arguments are described below:
 - COLL= is a path to property, each element (property) is separated with **"/"**, starting from the root of data model. When you place one collection inside another, you have to specify path to collection starting from current item (context).
 - HEIGHT - ...
 - WIDTH - ...
 - GROW - grow direction. Use 'right' to make it grow right, or 'down' for growing down.
-- NOINSERT - when it's set to 'yes', inserting of cells is not performed while processing current collection. Default value is 'no'. It is useful when you want to generate a chess board, for example.
+- INSERT - when it's set to 'no', inserting of cells is not performed while processing current collection. Default value is 'no'. It is useful when you want to generate a chess board, for example.
+- TAG - anything you want to store here. Tags are passed to data providers.
+- NESTED - useful for DB providers, we will talk about it later.
 
 Use property definition to display data. Here is full sample:
 ```
-{Car1/Wheel1/Diam;MULT=3.1;ADD=100;FORMAT=0.000}
+{Car1/Wheel1/Diam;MULT=3.1;ADD=100;FORMAT=0.000;TAG=ha-ha}
 ```
 Arguments are described below:
 - necessary argument is a path to property. Use fully-qualified path, starting from data root, or starting from current item, when you are in a collection context.
 - MULT multiples property value by it's argument.
 - ADD adds argument to property value or to result of MULT, if MULT is specified.
-- FORMAT is formatting numeric property value.
+- FORMAT is formatting numeric property value. For example, to get only 3.14 from PI, use format `0.00`
+- TAG - anything you want to store here. Tags are passed to data providers.
+
+**!TODO: add some help about `{PIC=...}`**
 
 ## Language for Oracle/MySql Provider
 
-bla-bla-bla
+not ready yet :(
 
 ## Language for XML Provider
 
-bla-bla-bla
+not ready yet :(
 
 
 **TODO: write more docs!**
