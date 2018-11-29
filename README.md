@@ -4,8 +4,15 @@ Leren is a simple Excel-based reporting engine. It helps to make a report in exc
 # Quick start!
 1. Make an empty excel file and name it "file1.xlsx"
 2. Type in cell A1 of worksheet: `{COLL=Apples/Green;WIDTH=2}`
-3. Type in cell A2 of worksheet: `{Size}`
-4. Let's describe data model:
+3. Type in cell B1 of worksheet: `{Size}`
+4. Now it looks like:  
+
+|   |                       A                   |   B    |   C   |
+|---|-------------------------------------------|--------|-------|
+| 1 | {COLL=Apples/Green;WIDTH=2}               | {Size} |       |
+| 2 |                                           |        |       |
+
+5. Let's describe data model:
 ```c#
 public class GreenApple
 {
@@ -34,7 +41,12 @@ IReportEngine engine = new Engine();
 engine.Provider = new ReflectionProvider(root);
 engine.Go(@"file.xlsx", @"report.xlsx");
 ```
-Now open the file `report.xlsx` to see what's generated.
+Now open the file `report.xlsx` to see what's generated. Or, you can see it here:
+
+|   |                       A                   |   B    |   C   |
+|---|-------------------------------------------|--------|-------|
+| 1 |                                           | 5      |       |
+| 2 |                                           | 10     |       |
 
 # How it works?
 
@@ -91,22 +103,29 @@ Arguments are described below:
 
 As for Oracle provider, use COLL to describe sql that returns data. Other properties are used to perform same things, excluding **nestes**. When you write a column name (of sql) in nested, it automatically becomes available for querying as a parameter in undelying collections/requests. There is a sample that makes it simple to understand.
 
-At first, let's make a provider to DB. I have Oracle.
+At first, let's make a provider to DB. I have Oracle DB.
 ```c#
 IReportEngine re = new Engine();
 re.Provider = new OracleProvider(@"DATA SOURCE=localhost/sid;PASSWORD=SWORDFISH;PERSIST SECURITY INFO=True;USER ID=JOHN");
 (re.Provider as OracleProvider).Parameters.Add("ARG1", "OP");
 re.Go(@"C:\TEMP\template.xlsx", @"C:\TEMP\generated.xlsx");
 ```
+^ Take a look, we passed a parameter: `ARG1`.
 
-And here is what we placed in Excel worksheet:
+And here is what we placed in Excel worksheet. In cell A1 we use passed parameter.
 
-|                       1                     |
-|---------------------------------------------|
-| {Coll=*select object_name from user_objects where object_type='TABLE' and object_name like **:ARG1** \|\| '%'*;width=2;height=3;**nested=object_name**} |
-| {OBJECT_NAME} |
-| {COLUMN_NAME}{Coll=*select column_name, table_name from all_tab_columns where table_name=**:object_name** order by column_name*;width=1;height=1;grow=down} |
+|   |                       A                     | B |
+|---|---------------------------------------------|---|
+| 1 | {Coll=*select object_name from user_objects where object_type='TABLE' and object_name like **:ARG1** \|\| '%'*;width=2;height=3;**nested=object_name**} |   |
+| 2 | {OBJECT_NAME} |   |
+| 3 | {COLUMN_NAME}{Coll=*select column_name, table_name from all_tab_columns where table_name=**:object_name** order by column_name*;width=1;height=1;grow=down} |   |
+| 4 |                                             |   |
 
+Nested value **object_name** from query of cell A1 is passed as a parameter to query of cell A3.
+
+An result is here:
+
+MySql provider is same as Oracle, exepting one fact that you have to write sql in MySql dialect and pass parameters via MySql's `@param` syntax.
 
 ## Language for XML Provider
 
