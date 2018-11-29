@@ -1,7 +1,7 @@
 # What is it?
 Leren is a simple Excel-based reporting engine. It helps to make a report in excel in fast-and-easy-to-make manner. You have to describe data sources right inside a cell of excel worksheet. It supports multi-level data structures and poor formatting options.
 
-# Fast start!
+# Quick start!
 1. Make an empty excel file and name it "file1.xlsx"
 2. Type in cell A1 of worksheet: `{COLL=Apples/Green;WIDTH=2}`
 3. Type in cell A2 of worksheet: `{Size}`
