@@ -38,7 +38,7 @@ Now open the file `report.xlsx` to see what's generated.
 
 # How it works?
 
-## Data provder
+## Data provider
 At first, select a data provider. Some of them are ready out-of-box:
 - Reflection provider for data stored in a tree of objects
 - Xml Provider for data stored in xml file
