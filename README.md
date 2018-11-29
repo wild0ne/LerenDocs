@@ -125,6 +125,8 @@ Nested value **object_name** from query of cell A1 is passed as a parameter to q
 
 An result is here:
 
+**paste result here**
+
 MySql provider is same as Oracle, exepting one fact that you have to write sql in MySql dialect and pass parameters via MySql's `@param` syntax.
 
 ## Language for XML Provider
