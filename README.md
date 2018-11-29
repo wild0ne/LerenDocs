@@ -89,7 +89,24 @@ Arguments are described below:
 
 ## Language for Oracle/MySql Provider
 
-not ready yet :(
+As for Oracle provider, use COLL to describe sql that returns data. Other properties are used to perform same things, excluding **nestes**. When you write a column name (of sql) in nested, it automatically becomes available for querying as a parameter in undelying collections/requests. There is a sample that makes it simple to understand.
+
+At first, let's make a provider to DB. I have Oracle.
+```c#
+IReportEngine re = new Engine();
+re.Provider = new OracleProvider(@"DATA SOURCE=localhost/sid;PASSWORD=SWORDFISH;PERSIST SECURITY INFO=True;USER ID=JOHN");
+(re.Provider as OracleProvider).Parameters.Add("ARG1", "OP");
+re.Go(@"C:\TEMP\template.xlsx", @"C:\TEMP\generated.xlsx");
+```
+
+And here is what we placed in Excel worksheet:
+
+|                       1                     |
+|---------------------------------------------|
+| {Coll=*select object_name from user_objects where object_type='TABLE' and object_name like **:ARG1** \|\| '%'*;width=2;height=3;**nested=object_name**} |
+| {OBJECT_NAME} |
+| {COLUMN_NAME}{Coll=*select column_name, table_name from all_tab_columns where table_name=**:object_name** order by column_name*;width=1;height=1;grow=down} |
+
 
 ## Language for XML Provider
 
