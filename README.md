@@ -75,7 +75,7 @@ public interface IProvider
 ## Report definition language
 There is a syntax for data source definition: curly bracets and special words. There are only three types of definitions: **collection**, **property** and **picture**.
 
-## Language for Reflection Provider
+## Syntax for Reflection Provider
 
 Use collection definition in order to make some cells repeat itself x times. Here is a sample of such definition:
 ```
@@ -103,7 +103,7 @@ Arguments are described below:
 
 **!TODO: add some help about `{PIC=...}`**
 
-## Language for Oracle/MySql Provider
+## Syntax for Oracle/MySql Provider
 
 As for Oracle provider, use COLL to describe sql that returns data. Other properties are used to perform same things, excluding **nestes**. When you write a column name (of sql) in nested, it automatically becomes available for querying as a parameter in undelying collections/requests. There is a sample that makes it simple to understand.
 
@@ -133,9 +133,8 @@ An result is here:
 
 MySql provider is same as Oracle, exepting one fact that you have to write sql in MySql dialect and pass parameters via MySql's `@param` syntax.
 
-## Language for XML Provider
+## Syntax for XML Provider
 
-not ready yet :(
-
+Docs are not ready yet
 
 **TODO: write more docs!**
