@@ -127,11 +127,11 @@ And here is what we placed in Excel worksheet. In cell A1 we use passed paramete
 
 Nested value **object_name** from query of cell A1 is passed as a parameter to query of cell A3.
 
-An result is here:
+Result is here:
 
 **paste result here**
 
-MySql provider is same as Oracle, exepting one fact that you have to write sql in MySql dialect and pass parameters via MySql's `@param` syntax.
+MySql provider is same as Oracle, excepting one fact that you have to write sql in MySql dialect and pass parameters via MySql's `@param` syntax.
 
 ## Syntax for XML Provider
 
