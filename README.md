@@ -1,5 +1,9 @@
 # What is it?
-Leren is a simple Excel-based reporting engine. It helps to make a report in excel in fast-and-easy-to-make manner. You have to describe data sources right inside a cell of excel worksheet. It supports multi-level data structures and poor formatting options.
+Leren is a simple Excel-based reporting engine. It helps to make a report in excel in fast-and-easy-to-make manner. You have to describe data sources right inside a cell of excel worksheet. It supports multi-level data structures and poor engine-provided formatting options. But anyway, you always have the power of excel to format cells and values as you wish.
+
+One of the most interesting benefits is that all of your formulas and VBA code stay alive and work as you expect them to. Every row or column insertion forces formulas to shift cell references (or not, if there is a dollar sign).
+
+In fact, there is a way to make a "live" report. You can generate report with a lot of formulas, VBA code and so on. User is able to change some data and see changes in the same moment.
 
 # Quick start!
 1. Make an empty excel file and name it "file1.xlsx"
@@ -72,7 +76,7 @@ public interface IProvider
 ## Report definition language
 There is a syntax for data source definition: curly brackets and special words. There are only three types of definitions: **collection**, **property** and **picture**.
 
-## Language for Reflection Provider
+## Syntax for Reflection Provider
 
 Use collection definition in order to make some cells repeat itself x times. Here is a sample of such definition:
 ```
@@ -80,12 +84,12 @@ Use collection definition in order to make some cells repeat itself x times. Her
 ```
 Arguments are described below:
 - COLL= is a path to property, each element (property) is separated with **"/"**, starting from the root of data model. When you place one collection inside another, you have to specify path to collection starting from current item (context).
-- HEIGHT - ...
-- WIDTH - ...
+- HEIGHT - describes height of repeatable block, for example 2 means two cells hight, starting from current cell.
+- WIDTH - describes width of repeatable block, for example 3 means three cells width, starting from current cell.
 - GROW - grow direction. Use 'right' to make it grow right, or 'down' for growing down.
-- INSERT - when it's set to 'no', inserting of cells is not performed while processing current collection. Default value is 'no'. It is useful when you want to generate a chess board, for example.
-- TAG - anything you want to store here. Tags are passed to data providers.
-- NESTED - useful for DB providers, we will talk about it later.
+- INSERT - when it's set to 'no', inserting of cells is not performed while processing current collection. Insertion of row may slow down performance of report generation process, thus, default value is 'no'. 'No' means that cells that lay lower than (or to the right, see parameter 'GROW') repeatable block are overwritten by copies of it. 'Yes' means that insertion is performed and no data is overwritten, just shifted to the right or down.
+- TAG - anything you want to store here. Out-of-box provideres don't use this information. Custom providers receive tags and may do some extra stuff if required.
+- NESTED - useful for DB providers, we will talk more about it later.
 
 Use property definition to display data. Here is full sample:
 ```
@@ -136,7 +140,7 @@ And here is what we placed in Excel worksheet. In cell A1 we use passed paramete
 
 Nested value **object_name** from query of cell A1 is passed as a parameter to query of cell A3.
 
-An result is here:
+Result is here:
 
 **paste result here**
 
@@ -153,4 +157,5 @@ Same as Oracle
 ```not ready yet :( ```
 
 
+Docs are not ready yet
 
