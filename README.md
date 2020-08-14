@@ -48,7 +48,7 @@ Now open the file `report.xlsx` to see what's generated. Or, you can see it here
 | 1 |                                           | 5      |       |
 | 2 |                                           | 10     |       |
 
-# How it works?
+# How does it work?
 
 ## Data provider
 At first, select a data provider. Some of them are ready out-of-box:
@@ -56,9 +56,10 @@ At first, select a data provider. Some of them are ready out-of-box:
 - Xml Provider for data stored in xml file
 - MySql provider for data stored in MySql database
 - Oracle provider for data stored in Oracle database
+- Posgre provider for data stored in Postgre database
 
 ## Custom data provider
-If you aren't satisfied with capabailities that are ready out-of-the-box you can always implement data provider by yourself. Implement **IProvider** interface in order to use your own data provder.
+If you aren't satisfied with capabilities that are ready out-of-the-box you can always implement data provider by yourself. Implement **IProvider** interface in order to use your own data provider.
 
 ```c#
 public interface IProvider
@@ -69,13 +70,13 @@ public interface IProvider
     }
 ```
 ## Report definition language
-There is a syntax for data source definition: curvy bracets and special words. There are only three types of definitions: **collection**, **property** and **picture**.
+There is a syntax for data source definition: curly brackets and special words. There are only three types of definitions: **collection**, **property** and **picture**.
 
 ## Language for Reflection Provider
 
 Use collection definition in order to make some cells repeat itself x times. Here is a sample of such definition:
 ```
-{COLL=Root/SomeProperty/SomeCollection;HEIGHT=1;WIDTH=10;GROW=DOWN;INSERT=NO;TAG=sometag}
+{COLL=Root/SomeProperty/SomeCollection;HEIGHT=1;WIDTH=10;GROW=DOWN;INSERT=YES;TAG=sometag}
 ```
 Arguments are described below:
 - COLL= is a path to property, each element (property) is separated with **"/"**, starting from the root of data model. When you place one collection inside another, you have to specify path to collection starting from current item (context).
@@ -88,22 +89,34 @@ Arguments are described below:
 
 Use property definition to display data. Here is full sample:
 ```
-{Car1/Wheel1/Diam;MULT=3.1;ADD=100;FORMAT=0.000;TAG=ha-ha}
+{Car1/Wheel1/Diam;MULT=3.1;ADD=100;FORMAT=0.000;NOTE=Note;TAG=ha-ha}
 ```
 Arguments are described below:
 - necessary argument is a path to property. Use fully-qualified path, starting from data root, or starting from current item, when you are in a collection context.
 - MULT multiples property value by it's argument.
 - ADD adds argument to property value or to result of MULT, if MULT is specified.
 - FORMAT is formatting numeric property value. For example, to get only 3.14 from PI, use format `0.00`
+- NOTE is here to add a comment to cell if required. If pointed property return `null` no comment is added
 - TAG - anything you want to store here. Tags are passed to data providers.
 
-**!TODO: add some help about `{PIC=...}`**
+Use picture definition to add a picture to sheet. Here is full sample:
 
-## Language for Oracle/MySql Provider
+```
+{PIC=path/to/picture;WIDH=100;HEIGHT=100;TAG=ha-ha;UNIT=PX}
+```
 
-As for Oracle provider, use COLL to describe sql that returns data. Other properties are used to perform same things, excluding **nestes**. When you write a column name (of sql) in nested, it automatically becomes available for querying as a parameter in undelying collections/requests. There is a sample that makes it simple to understand.
+Arguments are described below:
 
-At first, let's make a provider to DB. I have Oracle DB.
+- PIC necessary argument is a path to property. Use fully-qualified path, starting from data root, or starting from current item, when you are in a collection context. Property must points at `ImageInfo` object
+- UNIT is 'px' which means pixels, or 'perc', which means percent. It is a unit of measure of picture
+- WIDTH is a width of picture, in pixel or percent, depends on UNIT value
+- HEIGHT is a height of picture, in pixel or percent, depends on UNIT value
+
+## Language for Oracle Provider
+
+As for Oracle provider, use COLL to describe query that returns data. Other properties are used to perform same things, excluding **nested**. When you write a column name (of sql) in nested, it automatically becomes available for querying as a parameter in underlying collections/requests. There is a sample that makes it simple to understand.
+
+At first, let's make a provider to DB. I have an Oracle DB.
 ```c#
 IReportEngine re = new Engine();
 re.Provider = new OracleProvider(@"DATA SOURCE=localhost/sid;PASSWORD=SWORDFISH;PERSIST SECURITY INFO=True;USER ID=JOHN");
@@ -127,11 +140,17 @@ An result is here:
 
 **paste result here**
 
-MySql provider is same as Oracle, exepting one fact that you have to write sql in MySql dialect and pass parameters via MySql's `@param` syntax.
+## Language for MySql Provider
+
+MySql provider is same as Oracle's one, excepting the fact you have to write queries with MySql dialect and pass parameters via MySql's `@param` syntax.
+
+## Language for Postgre Provider
+
+Same as Oracle
 
 ## Language for XML Provider
 
-not ready yet :(
+```not ready yet :( ```
 
 
-**TODO: write more docs!**
+

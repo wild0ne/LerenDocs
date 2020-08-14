@@ -1,0 +1,22 @@
+# binary output (debug & release)
+**/bin/**
+**/obj/**
+
+#downloaded packages
+**/packages/**
+
+# compiled nuget package
+*.nupkg
+
+# code coverage file
+*.coverage
+
+# visual studio settings
+.vs/**
+**/*.suo
+**/*.csproj.user
+
+# deploy folder
+_nuget_packages_deploy/**/*.dll
+_nuget_packages_deploy/**/*.exe
+_nuget_packages_deploy/**/*.nupkg
