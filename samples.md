@@ -24,4 +24,4 @@ The fastest way to produce a report of huge table (100 000 rows)
 
 The sample demonstrates the way of using excel built-in formulas
 
-![image](https://raw.githubusercontent.com/wild0ne/LerenDocs/master/images/formulas-sampe.PNG)
+![image](https://raw.githubusercontent.com/wild0ne/LerenDocs/master/images/formulas-sample.PNG)
